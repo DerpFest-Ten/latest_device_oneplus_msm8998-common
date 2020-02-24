@@ -95,4 +95,8 @@
     <!-- FPS overlay -->
     <string name="fps_info_title">FPS overlay</string>
     <string name="fps_info_summary">Overlay mit aktuellen Bildern pro Sekunde anzeigen</string>
+    <!-- Log Tile -->
+    <string name="quick_settings_log_tile_label">LogTile</string>
+    <string name="quick_settings_log_tile_dialog_title">Optionen</string>
+    <string name="cannot_get_su">Aktion fehlgeschlagen, da der Superuser-Zugriff fehlt</string>
 </resources>

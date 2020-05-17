@@ -39,7 +39,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Audio new
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.audio.sdk.fluencetype=none \
-    persist.audio.fluence.voicecomm=true \
+    persist.vendor.audio.fluence.voicecomm=true \
     persist.vendor.audio.fluence.voicecall=true \
     persist.vendor.audio.fluence.voicerec=false \
     persist.vendor.audio.fluence.speaker=true \

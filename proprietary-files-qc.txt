@@ -980,6 +980,7 @@ vendor/lib64/libvpphvx.so
 vendor/lib64/libvpplibrary.so
 
 # Perf
+vendor/bin/energy-awareness
 vendor/bin/msm_irqbalance
 
 # Peripheral manager

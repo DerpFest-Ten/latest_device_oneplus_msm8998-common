@@ -20,15 +20,14 @@ package org.lineageos.settings.doze;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.display.AmbientDisplayConfiguration;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.UserHandle;
-import androidx.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
-
-import android.hardware.display.AmbientDisplayConfiguration;
+import androidx.preference.PreferenceManager;
 
 import java.util.List;
 
@@ -116,11 +115,6 @@ public final class Utils {
         return new AmbientDisplayConfiguration(context).alwaysOnAvailable();
     }
 
-    protected static void enableGesture(Context context, String gesture, boolean enable) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putBoolean(gesture, enable).apply();
-    }
-
     protected static boolean isGestureEnabled(Context context, String gesture) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(gesture, false);
@@ -143,14 +137,10 @@ public final class Utils {
                 || isPocketGestureEnabled(context);
     }
 
-    protected static Sensor findSensorWithType(SensorManager sensorManager, String type) {
-        if (TextUtils.isEmpty(type)) {
-            return null;
-        }
-        List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL);
-        for (Sensor s : sensorList) {
-            if (type.equals(s.getStringType())) {
-                return s;
+    protected static Sensor getSensor(SensorManager sm, String type) {
+        for (Sensor sensor : sm.getSensorList(Sensor.TYPE_ALL)) {
+            if (type.equals(sensor.getStringType())) {
+                return sensor;
             }
         }
         return null;

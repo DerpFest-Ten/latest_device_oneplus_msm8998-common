@@ -38,7 +38,8 @@ public class DozeService extends Service {
         mPickupSensor = new PickupSensor(this);
         mPocketSensor = new PocketSensor(this);
 
-        IntentFilter screenStateFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        IntentFilter screenStateFilter = new IntentFilter();
+        screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
         screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(mScreenStateReceiver, screenStateFilter);
     }

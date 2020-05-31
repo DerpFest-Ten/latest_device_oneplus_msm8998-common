@@ -22,6 +22,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.util.concurrent.ExecutorService;
@@ -50,7 +51,7 @@ public class PocketSensor implements SensorEventListener {
     public PocketSensor(Context context) {
         mContext = context;
         mSensorManager = mContext.getSystemService(SensorManager.class);
-        mSensor = Utils.findSensorWithType(mSensorManager, "com.oneplus.sensor.pocket");
+        mSensor = Utils.getSensor(mSensorManager, "oneplus.sensor.pocket");
         mExecutorService = Executors.newSingleThreadExecutor();
     }
 

@@ -25,6 +25,10 @@ import android.hardware.SensorManager;
 import android.os.SystemClock;
 import android.util.Log;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 public class PickupSensor implements SensorEventListener {
 
     private static final boolean DEBUG = false;
@@ -35,13 +39,19 @@ public class PickupSensor implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor mSensor;
     private Context mContext;
+    private ExecutorService mExecutorService;
 
     private long mEntryTimestamp;
 
     public PickupSensor(Context context) {
         mContext = context;
         mSensorManager = mContext.getSystemService(SensorManager.class);
-        mSensor = Utils.findSensorWithType(mSensorManager, "com.oneplus.sensor.pickup");
+        mSensor = Utils.getSensor(mSensorManager, "oneplus.sensor.pickup");
+        mExecutorService = Executors.newSingleThreadExecutor();
+    }
+
+    private Future<?> submit(Runnable runnable) {
+        return mExecutorService.submit(runnable);
     }
 
     @Override
@@ -51,9 +61,9 @@ public class PickupSensor implements SensorEventListener {
         long delta = SystemClock.elapsedRealtime() - mEntryTimestamp;
         if (delta < MIN_PULSE_INTERVAL_MS) {
             return;
-        } else {
-            mEntryTimestamp = SystemClock.elapsedRealtime();
         }
+
+        mEntryTimestamp = SystemClock.elapsedRealtime();
 
         if (event.values[0] == 1) {
             Utils.launchDozePulse(mContext);
@@ -67,13 +77,17 @@ public class PickupSensor implements SensorEventListener {
 
     protected void enable() {
         if (DEBUG) Log.d(TAG, "Enabling");
-        mEntryTimestamp = SystemClock.elapsedRealtime();
-        mSensorManager.registerListener(this, mSensor,
-                SensorManager.SENSOR_DELAY_NORMAL);
+        submit(() -> {
+            mEntryTimestamp = SystemClock.elapsedRealtime();
+            mSensorManager.registerListener(this, mSensor,
+                    SensorManager.SENSOR_DELAY_NORMAL);
+        });
     }
 
     protected void disable() {
         if (DEBUG) Log.d(TAG, "Disabling");
-        mSensorManager.unregisterListener(this, mSensor);
+        submit(() -> {
+            mSensorManager.unregisterListener(this, mSensor);
+        });
     }
 }

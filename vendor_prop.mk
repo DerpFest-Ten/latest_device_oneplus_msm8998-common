@@ -414,6 +414,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0
 
+# Zygote preforking
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.device_config.runtime_native.usap_pool_enabled=true
+
 # Build fingerprint
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.build.fingerprint=google/walleye/walleye:8.1.0/OPM1.171019.021/4565141:user/release-keys

@@ -681,4 +681,8 @@
 
     <!-- The maximum duration (in milliseconds) we expect a network transition to take -->
     <integer name="config_networkTransitionTimeout">20000</integer>
+
+    <!-- Flag indicating whether we should enable the adaptive sleep.-->
+    <bool name="config_adaptive_sleep_available">true</bool>
+
 </resources>
